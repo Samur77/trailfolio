@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real Estate Project - P2C Communication</title>
+    <title>Logistics Management</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         /* General Body Styles */
@@ -120,66 +120,31 @@
             background-color: #e9ecef;
             /* Light background for footer */
         }
-        .code-container {
-            background-color: #B4C3DD;
-            width: 885px;
-            height: 200px;
-            border: 5px solid #014784;;
-            overflow: scroll;
-          }
     </style>
 </head>
 
 <body>
     <header>
         <nav>
-            <a href="mytrail.html">Back to Trailfolio</a>
+            <a href="index.html">Back to Trailfolio</a>
         </nav>
     </header>
 
     <div class="container">
-        <h1>P2C Communication</h1>
+        <h1>Automated Account Update Process</h1>
         <p>
-            Created a child component named "childRelatedContact", similar to the "childAccountComponent." The
-            component uses an
-            API record ID and a @wire adapter to retrieve contact information from the database. The HTML for the
-            component displays
-            contact information, including the account ID and account name, which are retrieved from the
-            "getChildRelatedContacts"
-            method.
+            Designed and implemented a scalable flow to streamline bulk updates of account records, eliminating the need for manual
+            data entry. The process validates critical fields, such as "Type" and "Rating", which are key to shipment routing and
+            customer prioritization, while ensuring that incomplete data is not unintentionally overwritten. This automation
+            enhances operational efficiency, ensures data integrity, and provides logistics coordinators and account managers with
+            accurate, up-to-date client information, which is essential for planning, communication, and service optimization.
         </p>
-        <p>
-            Parent-to-child communication in a component involves the parent sending data to the child component. This
-            is achieved
-            by creating a new element in the parent component and passing data to it using the child component's public
-            properties.
-            The child component then displays the data in its HTML.
-        </p>
-        <p>
-            Child components retrieve data from parent components and display it. To deploy child accounts, navigate to
-            the account
-            page, edit the page, and add the "child account" component. Ensure the property name for child accounts is
-            "childAccounts" and deploy the child component, parent component, and apex controller.
-        </p>
-        <section>
-        <img src="../assets/img/P2CCommunication.png" alt="P2C Communication Flow"
-        title="Parent to Child Communication">
-        <div class="code-container language-javascript">
-        <pre><code class="language-javascript">
-        import { LightningElement, api, wire } from 'lwc';
-        import getChildRelatedContacts from '@salesforce/apex/AccountController.getChildRelatedContacts';
-        export default class ChildRelatedContact extends LightningElement {
-        @api recordId;
-        @wire(getChildRelatedContacts, {childAccId:'$recordId'})
-        relatedConList;
-        }
-        </code>
-                                                
-        </pre>  
-        </div>
+           <img src="assets/img/SchemaBuilder.png" alt="Schema Builder" class="img-responsive"
+            title="Schema Builder">
+            <img src="assets/img/AccountTableFlow.png" alt="Account Table Flow" class="img-responsive"
+                title="Account Table Flow">
         </section>
     </div>
-    
     <footer>
         © 2025 G. Irmak | Built with love & Salesforce vibes
     </footer>
