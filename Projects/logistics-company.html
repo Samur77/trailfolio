@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logistics Management</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            /* Using Roboto from Google Fonts */
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            /* Light gray background for a softer feel */
+            color: #014784;
+            /* Darker text for readability */
+            line-height: 1.6;
+            /* Improved line spacing */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #014784;
+            /* Darker blue/grey for header */
+            padding: 15px 0px;
+            /* Padding top/bottom, 0 left/right */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        /* Navigation Link Styles */
+        nav a {
+            color: #ecf0f1;
+            /* Lighter color for navigation text */
+            text-decoration: none;
+            /* Remove underline */
+            font-weight: 500;
+            /* Slightly bolder */
+            font-size: 1.1em;
+            padding: 10px 20px;
+            /* More padding for click area */
+            border-radius: 5px;
+            /* Slightly rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth transition for hover */
+        }
+
+        nav a:hover {
+            background-color: #85c3e7;
+            /* Darker background on hover */
+            color: #ffffff;
+            /* White text on hover */
+        }
+
+        /* Container for Content */
+        .container {
+            max-width: 900px;
+            /* Limit content width for better readability */
+            margin: 40px auto;
+            /* Center the container with top/bottom margin */
+            padding: 30px;
+            /* Inner padding */
+            background-color: #ffffff;
+            /* White background for the content box */
+            border-radius: 8px;
+            /* Rounded corners for the container */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* More prominent shadow for the content box */
+        }
+
+        /* Heading Styles */
+        h1 {
+            color: #014784;
+            /* Primary blue color for headings */
+            text-align: center;
+            margin-bottom: 25px;
+            /* Space below heading */
+            font-weight: 700;
+            /* Bolder heading */
+            font-size: 2.2em;
+            /* Larger heading */
+        }
+
+        /* Paragraph Styles */
+        p {
+            margin-bottom: 20px;
+            /* Space between paragraphs */
+            text-align: justify;
+            /* Justify text for a cleaner look */
+        }
+
+        /* Image Styles */
+        img {
+            max-width: 100%;
+            /* Ensure image is responsive and doesn't overflow */
+            height: auto;
+            /* Maintain aspect ratio */
+            display: block;
+            /* Remove extra space below image */
+            margin: 30px auto;
+            /* Center image with top/bottom margin */
+            border-radius: 5px;
+            /* Slightly rounded corners for the image */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for images */
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            /* Slightly smaller font */
+            color: #6c757d;
+            /* Softer gray color */
+            margin-top: 40px;
+            /* More space above the footer */
+            background-color: #e9ecef;
+            /* Light background for footer */
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="mytrail.html">Back to Trailfolio</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Automated Account Update Process</h1>
+        <p>
+            Designed and implemented a scalable flow to streamline bulk updates of account records, eliminating the need for manual
+            data entry. The process validates critical fields, such as "Type" and "Rating", which are key to shipment routing and
+            customer prioritization, while ensuring that incomplete data is not unintentionally overwritten. This automation
+            enhances operational efficiency, ensures data integrity, and provides logistics coordinators and account managers with
+            accurate, up-to-date client information, which is essential for planning, communication, and service optimization.
+        </p>
+           <img src="../assets/img/SchemaBuilder.png" alt="Schema Builder" class="img-responsive"
+            title="Schema Builder">
+            <img src="../assets/img/AccountTableFlow.png" alt="Account Table Flow" class="img-responsive"
+                title="Account Table Flow">
+        </section>
+    </div>
+    <footer>
+        © 2025 G. Irmak | Built with love & Salesforce vibes
+    </footer>
+
+</body>
+
+</html>

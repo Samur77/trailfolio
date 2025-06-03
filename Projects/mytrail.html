@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Trailfolio | Gulizar Irmak - Salesforce Developer</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body {
+            margin: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+            /* Use Roboto as primary font */
+            background: #f8f9fa;
+            /* Lighter background for softer feel */
+            color: #343a40;
+            /* Darker text for better contrast */
+            line-height: 1.6;
+            /* Improved line spacing for readability */
+            display: flex;
+            /* Enable flex for full page layout */
+            flex-direction: column;
+            /* Stack header, main, footer vertically */
+            min-height: 100vh;
+            /* Ensure body takes full viewport height */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #014784;
+            /* Deep blue, matching original */
+            padding: 1rem 2rem;
+            display: flex;
+            align-items: center;
+            /* Vertically center items */
+            justify-content: space-between;
+            /* Distribute items with space between */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        .header-logo-left img
+        {
+            height: 220px;
+            /* Adjust height for better balance */
+            width: auto;
+            /* Maintain aspect ratio */
+            display: block;
+            /* Remove extra space below image */
+       
+        }
+
+        /* Central Header Section - Flex Container */
+        .header-center {
+            display: flex;
+            flex-direction: column;
+            /* Stack logo and nav vertically */
+            align-items: center;
+            /* Horizontally center contents within this column */
+            flex-grow: 1;
+            /* Allows this section to take available space */
+            text-align: center;
+            /* Fallback for text alignment */
+        }
+
+        .header-center img {
+            height: 200px;
+            /* Adjust size of the central logo */
+            width: auto;
+            margin-bottom: 5px;
+            /* Space between logo and nav */
+        }
+
+        /* Navigation Links in Header */
+        .header-center nav {
+            display: flex;
+            /* Make nav a flex container for links */
+            gap: 40px;
+            /* Space between nav links */
+        }
+
+        .header-center nav a {
+            color: #f0f8ff;
+            /* Lighter white/blue for links */
+            text-decoration: none;
+            font-weight: 600;
+            /* Slightly bolder */
+            font-size: 1.05rem;
+            padding: 5px 10px;
+            /* Add padding for better click area */
+            border-radius: 4px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth hover effect */
+        }
+
+        .header-center nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Semi-transparent white background on hover */
+            color: #fff;
+        }
+
+        /* Main Content Container */
+        .main-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 30px auto;
+            /* More margin for breathing room */
+            background-color: #52b4e5;
+            /* White background for the main content area */
+            border-radius: 12px;
+            /* More pronounced rounded corners */
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+            /* Stronger, softer shadow */
+            overflow: hidden;
+            /* Ensures border-radius applies cleanly */
+            flex-grow: 1;
+            /* Allows main content to fill remaining space */
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            flex: 0 0 350px;
+            /* Slightly wider sidebar */
+            padding: 30px;
+            /* More padding */
+            text-align: center;
+            background-color: #b0d6e9;
+            /* Light grey background for sidebar */
+            border-right: 1px solid #e0e6ed;
+            /* Subtle separator line */
+        }
+
+        .profile-image {
+            display: block;
+            width: 220px;
+            /* Slightly smaller for better balance */
+            height: 220px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            /* More margin below image */
+            border: none;
+            /* Blue border around profile image */
+            box-shadow: 0 0 15px rgba(0, 123, 255, 0.3);
+            /* Glowing effect */
+        }
+
+        .hero h1 {
+            font-size: 2rem;
+            /* Larger font size */
+            color: #007bff;
+            /* Accent color for name */
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+            /* Different font for name */
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            /* Slightly larger text */
+            color: #555;
+            margin-bottom: 15px;
+            /* Space below intro text */
+        }
+
+        /* "That's Me" Modal Trigger */
+        .open-modal {
+            color: gold;
+            /* Use accent color for consistency */
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1.3rem;
+            /* Slightly larger */
+            text-decoration: none;
+            /* Ensure no underline */
+            transition: color 0.2s ease;
+        }
+
+        .open-modal:hover {
+            color: #0056b3;
+            /* Darker blue on hover */
+        }
+
+        /* Sidebar Navigation Links */
+        .sidebar .nav-links-sidebar {
+            list-style: none;
+            /* Remove default list bullets */
+            padding: 0;
+            margin-top: 30px;
+            
+            /* Space above these links */
+        }
+
+        .sidebar .nav-links-sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar .nav-links-sidebar a {
+            display: block;
+            /* Make links take full width for easier clicks */
+            background-color: #ffffff;
+            /* Light background for sidebar links */
+            color: #014784;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            border: 1px solid #52b4e5;
+        }
+
+        .sidebar .nav-links-sidebar a:hover {
+            background-color: #d6eaff;
+            /* Lighter blue on hover */
+            color: #0056b3;
+        }
+
+        /* Content Area */
+        .content {
+            flex: 1;
+            padding: 30px;
+            /* More padding */
+        }
+
+        section {
+            background: white;
+            margin-bottom: 30px;
+            /* More space between sections */
+            border-radius: 10px;
+            /* Consistent rounded corners */
+            padding: 2rem;
+            /* More padding inside sections */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+            /* Refined shadow */
+            border: 1px solid #e9ecef;
+            /* Subtle border */
+            border: 1px solid #52b4e5;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            /* Larger section titles */
+            color: #014784;
+            border-bottom: 2px solid #007bff;
+            /* Consistent accent color for border */
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        
+        }
+
+        .sf-images {
+            text-align: left;
+            padding: 1rem 0;
+            display: flex;
+            /* Use flex for image alignment */
+            align-items: center;
+            gap: 10px;
+            /* Space between images */
+        }
+
+        .sf-images img {
+            width: 40px;
+            /* Smaller, more subtle Salesforce icons */
+            height: auto;
+            margin-right: 0;
+            /* Remove margin-right if using gap */
+        }
+
+        .projects h2,
+        .skills h2,
+        .certifications h2,
+        .contact h2 {
+            /* Already styled by generic h2 rule above, no need for specific re-declaration */
+        }
+
+        .project-card {
+            border: 1px solid #52b4e5;
+            /* Lighter border */
+            padding: 1.5rem;
+            /* More padding */
+            margin: 1.5rem 0;
+            /* More margin */
+            border-radius: 8px;
+            /* Consistent rounded corners */
+            background: #fdfdfd;
+            /* Very light background for cards */
+            transition: all 0.3s ease;
+            /* Smooth transition for hover effects */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            /* Subtle shadow for cards */
+        }
+
+        .project-card:hover {
+            background: #f0f8ff;
+            /* Lighter blue on hover */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* More pronounced shadow on hover */
+            transform: translateY(-3px);
+            /* Subtle lift effect */
+        }
+
+        .project-card h3 {
+            color: #0056b3;
+            /* Darker blue for project titles */
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        .project-card p {
+            font-size: 0.95rem;
+            color: #555;
+            margin-bottom: 15px;
+        }
+
+        .project-card a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.2s ease;
+        }
+
+        .project-card a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        ul {
+            padding-left: 20px;
+            /* Standard indent for lists */
+            list-style: disc;
+            /* Explicitly use disc bullets */
+            margin: 0;
+            /* Remove default margin */
+        }
+
+        ul li {
+            margin-bottom: 8px;
+            /* Space between list items */
+            color: #495057;
+            /* Slightly softer color for list text */
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            /* Slightly smaller font */
+            color: #6c757d;
+            /* Softer gray color */
+            margin-top: 40px;
+            /* More space above the footer */
+            background-color: #e9ecef;
+            /* Light background for footer */
+        }
+
+        /* Form Styling */
+        form {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            /* Space between form elements */
+        }
+
+        input,
+        textarea {
+            padding: 0.85rem;
+            /* More padding */
+            font-size: 1rem;
+            border: 1px solid #ced4da;
+            /* Lighter border */
+            border-radius: 5px;
+            /* Slightly more rounded */
+            outline: none;
+            /* Remove default outline */
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #007bff;
+            /* Blue border on focus */
+            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+            /* Subtle blue glow on focus */
+        }
+
+        button {
+            padding: 1rem 2rem;
+            /* Larger button */
+            background-color: #007bff;
+            /* Primary blue color */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            width: fit-content;
+            align-self: flex-start;
+            /* Align button to the left */
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+            /* Subtle lift on hover */
+        }
+
+        /* Modal Overrides & Refinements */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            /* Higher z-index for modals */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.6);
+            /* Darker overlay */
+            animation: fadeIn 0.3s forwards;
+            /* Add fade-in animation */
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            margin: 8% auto;
+            /* Adjust margin for better vertical positioning */
+            padding: 30px;
+            /* More padding */
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            /* Slightly wider max-width */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            /* More prominent shadow */
+            text-align: left;
+            position: relative;
+            animation: slideIn 0.3s forwards;
+            /* Add slide-in animation */
+        }
+
+        .close-button,
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 28px;
+            /* Larger close button */
+            font-weight: normal;
+            /* Less bold */
+            color: #888;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .close-button:hover,
+        .close:hover {
+            color: #333;
+        }
+
+        .readme-popup-button {
+            background-color: #014784;
+            /* Use primary blue */
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            /* Slightly larger padding */
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .readme-popup-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-1px);
+        }
+
+        /* Animations for Modals */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+
+            /* Adjust breakpoint for larger tablets */
+            .main-container {
+                flex-direction: column;
+                /* Stack columns on smaller screens */
+                margin: 20px;
+                /* Adjust margin for smaller screens */
+            }
+
+            .sidebar {
+                flex: none;
+                /* Remove flex basis */
+                width: 100%;
+                /* Take full width */
+                border-right: none;
+                border-bottom: 1px solid #e0e6ed;
+                /* Add bottom border for separation */
+                padding-bottom: 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+                padding: 1rem;
+            }
+
+            .header-logo-left img,
+            .header-logo-right img {
+                height: 60px;
+                /* Smaller header images */
+            }
+
+            .header-center {
+                margin: 15px 0;
+                /* Space out elements */
+            }
+
+            .header-center img {
+                height: 80px;
+                /* Smaller central logo */
+                margin-bottom: 8px;
+            }
+
+            .header-center nav {
+                gap: 10px;
+                /* Closer nav links */
+                flex-wrap: wrap;
+                /* Allow links to wrap */
+                justify-content: center;
+            }
+
+            .header-center nav a {
+                font-size: 0.95rem;
+                padding: 4px 8px;
+            }
+
+            .main-container {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            .sidebar {
+                padding: 15px;
+            }
+
+            .profile-image {
+                width: 180px;
+                height: 180px;
+                margin-bottom: 15px;
+            }
+
+            .hero h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .content {
+                padding: 15px;
+            }
+
+            section {
+                padding: 1.2rem;
+                margin-bottom: 20px;
+            }
+
+            h2 {
+                font-size: 1.6rem;
+                margin-bottom: 15px;
+            }
+
+            .project-card {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            button {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.95rem;
+            }
+
+            .modal-content {
+                margin: 5% auto;
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+
+            .header-logo-left img,
+            .header-logo-right img {
+                height: 50px;
+            }
+
+            .header-center img {
+                height: 70px;
+            }
+
+            .header-center nav a {
+                font-size: 0.9rem;
+                padding: 3px 6px;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .hero p {
+                font-size: 0.9rem;
+            }
+
+            h2 {
+                font-size: 1.4rem;
+            }
+
+            .project-card h3 {
+                font-size: 1.2rem;
+            }
+
+            .project-card p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="header-logo-left">
+            <img src="../assets/img/Salesforce.com_logo.svg.png" alt="Salesforce Logo">
+         
+        </div>
+   
+        <div class="header-center">
+            <img src="../assets/img/IrmakLogo.png" alt="Gülizar Irmak Logo">
+            <nav>
+                <a href="#projects">Projects</a>
+                <a href="#skills">Skills</a>
+                <a href="#certifications">Certifications</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+        <div class="header-logo-left">
+            <img src="../assets/img/salesforceIcon.png" alt="Salasforce Icons">
+        </div>
+       <!-- <div class="header-logo-right">
+            <img src="../assests/img/trailhead.png" alt="Trailhead Logo">
+        </div>-->
+    </header>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="hero" id="welcome">
+                <img src="../assets/img/IMG_3406.jpg" class="profile-image" alt="G. Irmak Profile Picture">
+
+                <a href="#" class="open-modal" style="font-family: 'Montserrat', sans-serif;">That’s Me</a>
+
+                <div class="modal" id="aboutMeModal">
+                    <div class="modal-content">
+                        <span class="close">&times;</span>
+                        <h2>About Me</h2>
+                        <p>I’m a Salesforce Developer with roots in graphic design, and I genuinely love what I do. I
+                            believe in working hard,
+                            staying curious, and growing together as a team. Solving problems creatively, supporting the
+                            people I work with, and
+                            building meaningful solutions—it’s all part of what makes this journey rewarding for me. I
+                            take pride in being reliable,
+                            thoughtful, and someone others can count on. At the end of the day, it’s not just about the
+                            code—it’s about the people
+                            behind it.</p>
+                    </div>
+                </div>
+
+                <ul class="nav-links-sidebar">
+                    <li><a href="#projects">Explore Projects</a></li>
+                    <li><a href="#skills">My Skills</a></li>
+                    <li><a href="#certifications">My Certifications</a></li>
+                    <li><a href="#contact">Contact Me</a></li>
+                </ul>
+            </div>
+            <section class="skills" id="skills">
+                <h2>Skills</h2>
+                <ul>
+                    <p>Apex Programming</p>
+                    <p>Lightning Web Components</p>
+                    <p>Flows & Process Builder</p>
+                    <p>SOQL/SOSL</p>
+                    <p>Salesforce Admin Tools</p>
+                    <p>Lightning App Builder</p>
+                    <p>HTML</p>
+                    <p>CSS</p>
+                    <p>JavaScript</p>
+                    <p>Data Loader</p>
+                    <p>Data Import Wizard</p>
+                </ul>
+            </section>
+            <section class="certifications" id="certifications">
+                <h2>Certifications</h2>
+                <ul>
+                   <p>Salesforce Platform Developer I</p> <span style="font-size:smaller;"><i>(in progress)</i></span>
+                  
+                </ul>
+            </section>
+        </div>
+
+        <div class="content">
+            <section class="projects" id="projects">
+                <div id="readMeModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-button" id="closeReadMe">&times;</span>
+                        <p>
+                            All names and persons used in the projects are entirely fictitious and have no relation to
+                            any company.
+                        </p>
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>Featured Projects</h2>
+                    <button id="readMeBtn" class="readme-popup-button">READ ME</button>
+                </div>
+
+                <div class="project-card">
+                    <h3>Real Estate CRM</h3>
+                    <p>Developed a custom Salesforce app to manage 200 real estate centers, onboarding 40+ users across
+                        asset, finance, and
+                        support teams. Built Lightning Web Components (LWC) using HTML, CSS, XML, and JavaScript,
+                        improving data processing speed by 20%.
+                    </p>
+                    <a href="realEstate-project.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Banking Service App</h3>
+                    <p>Designed a custom data import wizard to streamline uploads of over 5,000 financial records.
+                        Coded Apex classes and LWCs to securely fetch and display financial data, ensuring 100% accuracy
+                        in interest scheme tracking.
+                    </p>
+                    <a href="banking-service-app.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Logistics Company</h3>
+                    <p>Automated user access and security processes using Flows, validation rules, and approval
+                        processes, reducing onboarding
+                        time by 60%. Developed LWCs to connect user records and improve order processing, cutting manual
+                        entry errors and increasing delivery
+                        speed by 15%.
+                    </p>
+                    <a href="logistics-company.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Software Products Company</h3>
+                    <p>Integrated a real-time geocoding service for an interactive mapping tool, improving accuracy for
+                        500+ daily
+                        location inputs. Created an LWC-based application to streamline cloud product queries,
+                        increasing sales team response time by
+                        15%.
+                    </p>
+                    <a href="technical-team.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>"The Cookie Jar" Order Form</h3>
+                    <p>"The Cookie Jar Order Form," a fun little project where I got to build a front-end ordering
+                        system for a
+                        bakery. It's designed to be super easy for anyone to use, letting customers put together their
+                        perfect cookie and drink
+                        order right from their browser.</p>
+                    <a href="cookie-jar.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Simple "Library Management System"</h3>
+                    <p>This project is a web-based application designed to manage a collection of books, offering
+                        fundamental functionalities
+                        for organizing and retrieving library data. Built using HTML, CSS, and JavaScript, it provides a
+                        straightforward
+                        interface for common library tasks.</p>
+                    <a href="library-manage.html" target="_blank">View Project &rarr;</a>
+                </div>
+                <div class="project-card">
+                    <h3>Interactive "Shopping Cart"</h3>
+                    <p>This project delivers a robust and interactive shopping cart experience, built entirely with
+                        HTML, CSS, and JavaScript.
+                        It simulates a core component of an e-commerce platform, allowing users to manage their
+                        selections with advanced
+                        features and real-time feedback.</p>
+                    <a href="shopping-cart.html" target="_blank">View Project &rarr;</a>
+                </div>
+            </section>
+
+            <section class="contact" id="contact">
+                <h2>Contact Me</h2>
+                <p>Email: guliz.irmak70@gmail.com</p>
+                <form action="mailto:guliz.irmak70@gmail.com" method="POST" enctype="text/plain">
+                    <input type="text" name="name" placeholder="Your Name" required />
+                    <input type="email" name="email" placeholder="Your Email" required />
+                    <textarea name="message" rows="5" placeholder="Your Message (e.g., job opportunity details)"
+                        required></textarea>
+                    <button type="submit">Send Email</button>
+                </form>
+            </section>
+        </div>
+    </div>
+
+    <footer>
+        © 2025 G. Irmak | Built with love & Salesforce vibes
+    </footer>
+
+    <script>
+        // READ ME Modal Logic
+        document.addEventListener("DOMContentLoaded", function () {
+            const readMeBtn = document.getElementById("readMeBtn");
+            const readMeModal = document.getElementById("readMeModal");
+            const closeReadMe = document.getElementById("closeReadMe");
+
+            if (readMeBtn) {
+                readMeBtn.onclick = function () {
+                    readMeModal.style.display = "block";
+                };
+            }
+
+            if (closeReadMe) {
+                closeReadMe.onclick = function () {
+                    readMeModal.style.display = "none";
+                };
+            }
+
+            window.onclick = function (event) {
+                if (event.target === readMeModal) {
+                    readMeModal.style.display = "none";
+                }
+            };
+        });
+
+        // About Me Modal Logic
+        document.addEventListener("DOMContentLoaded", function () {
+            const openModalLink = document.querySelector('.open-modal');
+            const aboutMeModal = document.getElementById('aboutMeModal');
+            const closeAboutMe = aboutMeModal ? aboutMeModal.querySelector('.close') : null; // Safely get close button
+
+            if (openModalLink) {
+                openModalLink.addEventListener('click', function (e) {
+                    e.preventDefault(); // Prevent default link behavior
+                    if (aboutMeModal) {
+                        aboutMeModal.style.display = 'block';
+                    }
+                });
+            }
+
+            if (closeAboutMe) {
+                closeAboutMe.addEventListener('click', function () {
+                    if (aboutMeModal) {
+                        aboutMeModal.style.display = 'none';
+                    }
+                });
+            }
+
+            window.addEventListener('click', function (e) {
+                if (e.target == aboutMeModal) {
+                    aboutMeModal.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+
+</html>

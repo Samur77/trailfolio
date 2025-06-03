@@ -1,0 +1,131 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f9f9f9;
+        color: #333;
+      }
+  
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 8px;
+      }
+  
+      h1 {
+        text-align: center;
+        color: #000000;
+      }
+  
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+  
+      input[type="text"], input[type="number"] {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+  
+      button {
+        padding: 10px;
+        background-color: #4c90af;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+  
+      button:hover {
+        background-color: #4c90af;
+      }
+  
+      .results {
+        margin-top: 20px;
+      }
+  
+      .results h2 {
+        color: #333;
+      }
+  
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+  
+      li {
+        background: #f4f4f4;
+        margin-bottom: 10px;
+        padding: 10px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+        <!--Scenario: You are building an app to manage a library.
+You need to store books' details like title, author, and year. Users can:
+-Add a new book.
+-Search for books by the author's name.
+-List all books published after a certain year.-->
+      <div class="container">
+        <h1>Library Management</h1>
+    
+        <!-- Add Book Form -->
+        <form id="addBookForm">
+          <input type="text" id="title" placeholder="Book Title" required />
+          <input type="text" id="author" placeholder="Author Name" required />
+          <input type="number" id="year" placeholder="Year" required />
+          <button type="submit">Add Book</button>
+        </form>
+    
+        <!-- Search Form -->
+        <form id="searchForm">
+          <input type="text" id="searchAuthor" placeholder="Search by Author" required />
+          <button type="submit">Search</button>
+        </form>
+    
+        <!-- List Books After Year Form -->
+        <form id="listYearForm">
+          <input type="number" id="searchYear" placeholder="List books after year" required />
+          <button type="submit">List Books</button>
+        </form>
+    
+        <!-- Results Section -->
+        <div class="results">
+          <h2>Results</h2>
+          <ul id="resultsList"></ul>
+        </div>
+        <br>
+        <footer>
+          <nav>
+            <a href="mytrail.html">Back to Trailfolio</a>
+          </nav>
+          </footer>
+      </div>
+     
+  
+      <script src="/questions-practice/library-app/library-app.js"></script>
+     
+  </body>
+
+<script src="../library-app/library-manage.js"></script>
+
+    
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>The Cookie Jar Order Form</title>
+    <style>
+        body {
+            /* Set body as a flex container to center its direct children */
+            display: flex;
+            flex-direction: column;
+            /* Stack children vertically */
+            align-items: center;
+            /* Center children horizontally */
+            min-height: 100vh;
+            /* Ensure body takes full viewport height for vertical centering effect if desired */
+            margin: 0;
+            /* Remove default body margin */
+            padding: 20px;
+            /* Add some padding around the content */
+            box-sizing: border-box;
+            /* Include padding in element's total width/height */
+        }
+
+        /* Styles for the logo container (we'll wrap the image in a div) */
+        .logo-container {
+            text-align: center;
+            /* Centers the image and any text inside this container */
+            margin-bottom: 20px;
+            /* Space between logo and form */
+            /* The image itself was being treated as a flex item, making its height calculation a bit off.
+               Wrapping it in a container helps. */
+        }
+
+        /* Styles for the image inside the logo-container */
+        .logo-container img {
+            height: 17vh;
+            /* Keep your desired height */
+            /* Remove the inline style from the image tag as we're defining it in CSS */
+            /* The 'display: flex' and 'justify-content: center' were applied to the image directly,
+               which is not ideal for centering the image itself. It's better to center its container. */
+        }
+
+        /* Styles for the form (which contains the table) */
+        form {
+            /* Since the table inside the form has a defined width implicitly by its content,
+               we can center the form using margin: auto. */
+            margin: 0 auto;
+            border: 6px solid;
+            /* Use shorthand for border if you prefer */
+            /* The image border was in the original, I'm assuming you want a border around the form/table */
+            border-color: #764502;
+            /* Example border color */
+            padding: 1ch;
+            /* Use consistent units like 'px' or 'em' for padding for better control */
+            background-color: #f9f9f9;
+            /* Light background for the form */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow */
+            max-width: 800px;
+            /* Limit the maximum width of the form */
+        }
+
+        /* Styles for the table inside the form */
+        table {
+            width: 100%;
+            /* Make the table take up 100% of the form's width */
+            border-collapse: collapse;
+            /* Collapse borders for a cleaner look */
+        }
+
+        td {
+            padding: 8px;
+            /* Add some padding inside table cells */
+            vertical-align: top;
+            /* Align content to the top in cells */
+        }
+
+        /* Specific styling for the text colors */
+        .classic-cookies-text {
+            color: rgb(11, 174, 79);
+            font-size: medium;
+        }
+
+        .seasonal-cookies-text {
+            color: red;
+            font-size: medium;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="logo-container">
+        <img src="../assets/img/CookieJar.png" alt="The Cookie Jar Logo">
+
+    </div>
+
+    <form>
+        <table border="0" style="padding:1ch">
+            <tr>
+                <td>Name</td>
+                <td><input type="text" name="name" required></td>
+            </tr>
+            <tr>
+                <td>Phone</td>
+                <td><input type="tel" name="phone" required></td>
+            </tr>
+            <tr>
+                <td>Address</td>
+                <td><textarea name="address" required></textarea></td>
+            </tr>
+            <tr>
+                <td class="classic-cookies-text">Classic Cookies</td>
+                <td>
+                    <input type="checkbox" name="classic[]" value="Strawberry Shortcake"> Strawberry Shortcake<br>
+                    <input type="checkbox" name="classic[]" value="Oreo"> Oreo<br>
+                    <input type="checkbox" name="classic[]" value="Sugar"> Sugar<br>
+                    <input type="checkbox" name="classic[]" value="Chocolate Chip"> Chocolate Chip<br>
+                </td>
+            </tr>
+            <tr>
+                <td class="seasonal-cookies-text">Seasonal Cookies</td>
+                <td>
+                    <input type="checkbox" name="seasonal[]" value="Christmas Bundle"> Christmas Bundle (8 variety
+                    pack)<br>
+                    <input type="checkbox" name="seasonal[]" value="Peppermint-Chocolate"> Peppermint-Chocolate<br>
+                    <input type="checkbox" name="seasonal[]" value="Matcha Dark Chocolate Hershey"> Matcha Dark
+                    Chocolate Hershey<br>
+                    <input type="checkbox" name="seasonal[]" value="Gingerbread Man"> Gingerbread Man<br>
+                </td>
+            </tr>
+            <tr>
+                <td>Drink</td>
+                <td>
+                    <select name="drink">
+                        <option value="">--Select--</option>
+                        <option value="Coffee">Coffee</option>
+                        <option value="Hot Chocolate">Hot Chocolate</option>
+                        <option value="Matcha Latte">Matcha Latte</option>
+                        <option value="Yuzu Tea">Yuzu Tea</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Base for Drink</td>
+                <td>
+                    <select name="drink_base">
+                        <option value="">--Select--</option>
+                        <option value="Regular Milk">Regular Milk</option>
+                        <option value="Almond Milk">Almond Milk</option>
+                        <option value="Water">Water</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Temperature of Drink</td>
+                <td>
+                    <select name="drink_temp">
+                        <option value="">--Select--</option>
+                        <option value="Hot">Hot</option>
+                        <option value="Cold">Cold</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Comments</td>
+                <td><textarea name="comments"></textarea></td>
+            </tr>
+            <tr>
+                <td colspan="2" style="text-align: center;"><button type="submit">Submit</button></td>
+            </tr>
+        </table>
+    </form>
+    <br>
+    <footer>
+        <nav>
+            <a href="mytrail.html">Back to Trailfolio</a>
+        </nav>
+    </footer>
+</body>
+
+</html>

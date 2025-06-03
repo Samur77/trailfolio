@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Team</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* General Body Styles */
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            /* Using Roboto from Google Fonts */
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            /* Light gray background for a softer feel */
+            color: #014784;
+            /* Darker text for readability */
+            line-height: 1.6;
+            /* Improved line spacing */
+        }
+
+        /* Header Styles */
+        header {
+            background-color: #014784;
+            /* Darker blue/grey for header */
+            padding: 15px 0px;
+            /* Padding top/bottom, 0 left/right */
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for depth */
+        }
+
+        /* Navigation Link Styles */
+        nav a {
+            color: #ecf0f1;
+            /* Lighter color for navigation text */
+            text-decoration: none;
+            /* Remove underline */
+            font-weight: 500;
+            /* Slightly bolder */
+            font-size: 1.1em;
+            padding: 10px 20px;
+            /* More padding for click area */
+            border-radius: 5px;
+            /* Slightly rounded corners */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            /* Smooth transition for hover */
+        }
+
+        nav a:hover {
+            background-color: #85c3e7;
+            /* Darker background on hover */
+            color: #ffffff;
+            /* White text on hover */
+        }
+
+        /* Container for Content */
+        .container {
+            max-width: 900px;
+            /* Limit content width for better readability */
+            margin: 40px auto;
+            /* Center the container with top/bottom margin */
+            padding: 30px;
+            /* Inner padding */
+            background-color: #ffffff;
+            /* White background for the content box */
+            border-radius: 8px;
+            /* Rounded corners for the container */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* More prominent shadow for the content box */
+        }
+
+        /* Heading Styles */
+        h1 {
+            color: #014784;
+            /* Primary blue color for headings */
+            text-align: center;
+            margin-bottom: 25px;
+            /* Space below heading */
+            font-weight: 700;
+            /* Bolder heading */
+            font-size: 2.2em;
+            /* Larger heading */
+        }
+
+        /* Paragraph Styles */
+        p {
+            margin-bottom: 20px;
+            /* Space between paragraphs */
+            text-align: justify;
+            /* Justify text for a cleaner look */
+        }
+
+        /* Image Styles */
+        img {
+            max-width: 100%;
+            /* Ensure image is responsive and doesn't overflow */
+            height: auto;
+            /* Maintain aspect ratio */
+            display: block;
+            /* Remove extra space below image */
+            margin: 30px auto;
+            /* Center image with top/bottom margin */
+            border-radius: 5px;
+            /* Slightly rounded corners for the image */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for images */
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.85rem;
+            /* Slightly smaller font */
+            color: #6c757d;
+            /* Softer gray color */
+            margin-top: 40px;
+            /* More space above the footer */
+            background-color: #e9ecef;
+            /* Light background for footer */
+        }
+        .code-container {
+            background-color: #B4C3DD;
+            width: 885px;
+            height: 200px;
+            border: 5px solid #014784;;
+            overflow: scroll;
+          }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="mytrail.html">Back to Trailfolio</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Live SA Map Component</h1>
+        <p>
+            Developed a dynamic Lightning Web Component (saMap) that integrates with Salesforce's Lightning Message Service (LMS) to
+            render real-time map markers based on updates to service appointment data. Implemented efficient subscription and
+            cleanup logic using connectedCallback and disconnectedCallback lifecycle hooks. Leveraged LMS to subscribe to a custom
+            message channel (SAListUpdate__c) and dynamically update geolocation data (Latitude and Longitude) on the map. Ensured
+            modular and maintainable code by using the @wire decorator for context injection and modern JavaScript features for data
+            transformation and rendering.
+        </p>
+        <img src="../assets/img/TechnicalTeam.png" alt="Technical Team" class="img-responsive" title="Technical Team">
+        <div class="code-container language-javascript">
+            <pre><code class="language-javascript">
+            import {LightningElement, wire} from "lwc";
+            import {subscribe, unsubscribe, MessageContext} from "lightning/messageService";
+            import SA_LIST_UPDATE_MESSAGE from "@salesforce/messageChannel/SAListUpdate__c";
+            export default class SaMap extends LightningElement {
+            mapMarkers = [];
+            subscription = null;
+                        
+            @wire(MessageContext) messageContext;
+                        
+            connectedCallback() {
+            this.subscription = subscribe (this.messageContext, SA_LIST_UPDATE_MESSAGE,
+            (message) => {
+            this.handlesAListUpdate(message);
+            });
+            }
+            disconnectedCallback() {
+            unsubscribe(this.subscription);
+            this.subscription = null;
+            }
+            handlesAListUpdate(message){
+            this.mapMarkers = message.sadetails.map((sadetail) => {
+            const Latitude = sadetail.Location__Latitude__s;
+            const Longitude = sadetail.Location__Longitude__s;
+            return{
+            location: {Latitude, Longitude},
+            title: sadetail.Name__c,
+            description: `Coords: ${Latitude}, ${Longitude}`,
+            icon: "standard:people"
+            };
+            });
+            }
+            }
+                    </code>
+                        
+                    </pre>
+        </div>
+        </section>
+    </div>
+    <footer>
+        © 2025 G. Irmak | Built with love & Salesforce vibes
+    </footer>
+</body>
+
+</html>

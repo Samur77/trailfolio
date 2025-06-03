@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Shopping Cart</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+            background-color: #f2f2f2;
+            display: flex;
+            /* Using flexbox for main body layout */
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: chocolate;
+            width: 100%;
+            margin-left: 100px;
+            
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            /* Limit width for better readability on large screens */
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-controls {
+            display: flex;
+            flex-wrap: wrap;
+            /* Allow items to wrap on smaller screens */
+            gap: 10px;
+            /* Space between items */
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        #itemInput {
+            flex-grow: 1;
+            /* Allow input to take available space */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            min-width: 150px;
+            /* Ensure input is not too small */
+        }
+
+        button {
+            background-color: #4073e1;
+            color: white;
+            padding: 10px 15px;
+            /* Slightly adjusted padding */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            /* Smooth hover effect */
+        }
+
+        button:hover {
+            background-color: #06266f;
+            /* Slightly darker on hover */
+        }
+
+        #clearCartBtn {
+            background-color: chocolate;
+            /* Red color for clear cart */
+        }
+
+        #clearCartBtn:hover {
+            background-color: #c0392b;
+        }
+
+        .output {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            /* Lighter border */
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            /* Lighter background */
+        }
+
+        #messageDiv {
+            color: #28a745;
+            /* Green for success messages */
+            font-weight: bold;
+            margin-bottom: 10px;
+            min-height: 20px;
+            /* Reserve space to prevent layout shift */
+        }
+
+        #errorDiv {
+            color: #dc3545;
+            /* Red for error messages */
+            font-weight: bold;
+            margin-bottom: 10px;
+            min-height: 20px;
+        }
+
+        #cartListDiv h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        .output ul {
+            list-style-type: none;
+            /* No default bullet points */
+            padding: 0;
+            margin: 0;
+        }
+
+        .output li {
+            display: flex;
+            /* Flex for item name, quantity, price, and remove button */
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px dashed #eee;
+            /* Light dashed separator */
+        }
+
+        .output li:last-child {
+            border-bottom: none;
+            /* No border for the last item */
+        }
+
+        .item-details {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .item-details .quantity {
+            font-weight: bold;
+            color: #555;
+            min-width: 25px;
+            /* Ensure quantity display has consistent width */
+            text-align: right;
+        }
+
+        .item-details .price {
+            font-style: italic;
+            color: #777;
+            min-width: 60px;
+            /* Ensure price display has consistent width */
+            text-align: right;
+        }
+
+
+        .remove-item-btn {
+            background-color: #ffc107;
+            /* Orange for remove button */
+            color: #333;
+            padding: 5px 10px;
+            font-size: 0.8em;
+            border-radius: 3px;
+        }
+
+        .remove-item-btn:hover {
+            background-color: #e0a800;
+        }
+
+        #cart-total {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #ccc;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: right;
+            color: #333;
+        }
+    </Style>
+</head>
+
+<body>
+    <h1>Your Shopping Cart</h1>
+    <div class="container">
+        <div class="cart-controls">
+            <input id="itemInput" type="text" placeholder="Enter item name (e.g., Apple, 1.50)">
+            <button onclick="addItemFromInput()">Add item</button>
+            <button onclick="removeLastItem()">Remove Last Item</button>
+            <button onclick="viewCart()">View Cart</button>
+            <button id="clearCartBtn" onclick="clearCart()">Clear Cart</button>
+        </div>
+        <div class="output" id="output">
+            <div id="messageDiv"></div>
+            <div id="errorDiv"></div>
+            <div id="cartListDiv">
+                <p>Cart is empty.</p>
+            </div>
+            <div id="cart-total">Total: $0.00</div>
+        </div>
+    </div>
+    <br>
+    <footer>
+        <nav>
+            <a href="mytrail.html">Back to Trailfolio</a>
+        </nav>
+    </footer>
+
+    <script>
+        // Use a more complex item structure: { name: "Apple", price: 1.00, quantity: 1 }
+        let cart = [];
+        const maxItems = 10; // Increased max items for more flexibility
+        const LOCAL_STORAGE_KEY = 'shoppingCart';
+
+        // --- Utility Functions ---
+
+        // Load cart from Local Storage
+        function loadCartFromLocalStorage() {
+            const storedCart = localStorage.getItem(LOCAL_STORAGE_KEY);
+            if (storedCart) {
+                try {
+                    cart = JSON.parse(storedCart);
+                } catch (e) {
+                    console.error("Error parsing cart from local storage:", e);
+                    cart = []; // Reset cart if parsing fails
+                }
+            } else {
+                cart = [];
+            }
+        }
+
+        // Save cart to Local Storage
+        function saveCartToLocalStorage() {
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
+        }
+
+        // Display temporary messages (success)
+        function displayMessage(message) {
+            const messageDiv = document.getElementById('messageDiv');
+            const errorDiv = document.getElementById('errorDiv');
+            messageDiv.innerHTML = `<p>${message}</p>`;
+            errorDiv.innerHTML = ''; // Clear any error messages
+            setTimeout(() => {
+                messageDiv.innerHTML = '';
+            }, 3000);
+        }
+
+        // Display temporary error messages
+        function displayError(message) {
+            const messageDiv = document.getElementById('messageDiv');
+            const errorDiv = document.getElementById('errorDiv');
+            errorDiv.innerHTML = `<p>${message}</p>`;
+            messageDiv.innerHTML = ''; // Clear any success messages
+            setTimeout(() => {
+                errorDiv.innerHTML = '';
+            }, 5000); // Errors might need more time
+        }
+
+        // Calculate and display total price
+        function calculateAndDisplayTotal() {
+            const totalElement = document.getElementById('cart-total');
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+            });
+            totalElement.textContent = `Total: $${total.toFixed(2)}`;
+        }
+
+        // --- Core Cart Logic ---
+
+        // Update the cart display (list and total)
+        function updateCartDisplay() {
+            const cartListDiv = document.getElementById('cartListDiv');
+            if (cart.length === 0) {
+                cartListDiv.innerHTML = "<p>Cart is empty.</p>";
+            } else {
+                let itemListHTML = "<h3>Items in your cart:</h3><ul>";
+                cart.forEach((item, index) => {
+                    itemListHTML += `
+                        <li>
+                            <div class="item-details">
+                                <span>${item.name}</span>
+                                <span class="quantity">Qty: ${item.quantity}</span>
+                                <span class="price">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                            <button class="remove-item-btn" onclick="removeItemByIndex(${index})">Remove</button>
+                        </li>
+                    `;
+                });
+                itemListHTML += "</ul>";
+                cartListDiv.innerHTML = itemListHTML;
+            }
+            calculateAndDisplayTotal();
+            saveCartToLocalStorage(); // Save changes to local storage
+        }
+
+        // Add Items to Cart
+        function addItem(name, price, quantity) {
+            const existingItemIndex = cart.findIndex(item => item.name.toLowerCase() === name.toLowerCase());
+
+            if (existingItemIndex > -1) {
+                // Item already exists, increase quantity
+                cart[existingItemIndex].quantity += quantity;
+                displayMessage(`Increased quantity of "${name}".`);
+            } else {
+                // Check overall cart item count before adding a new unique item
+                if (cart.length < maxItems) {
+                    cart.push({ name: name, price: price, quantity: quantity });
+                    displayMessage(`"${name}" has been added to the cart.`);
+                } else {
+                    displayError("Cart is full! Remove an item to add more.");
+                }
+            }
+            updateCartDisplay();
+        }
+
+        // Add item from input field
+        function addItemFromInput() {
+            const itemInput = document.getElementById('itemInput');
+            const inputValue = itemInput.value.trim();
+
+            if (!inputValue) {
+                displayError("Please enter an item name and optional price (e.g., Apple, 1.50).");
+                return;
+            }
+
+            // Parse input: "ItemName" or "ItemName, Price"
+            const parts = inputValue.split(',').map(part => part.trim());
+            let itemName = parts[0];
+            let itemPrice = 0;
+
+            if (parts.length > 1) {
+                const parsedPrice = parseFloat(parts[1]);
+                if (!isNaN(parsedPrice) && parsedPrice >= 0) {
+                    itemPrice = parsedPrice;
+                } else {
+                    displayError("Invalid price entered. Please use a number (e.g., Apple, 1.50).");
+                    return;
+                }
+            } else {
+                // Default price if not provided
+                itemPrice = 0.00;
+            }
+
+            addItem(itemName, itemPrice, 1); // Always add 1 quantity from input for new items
+            itemInput.value = ''; // Clear input field
+        }
+
+        // Remove last item from cart
+        const removeLastItem = function () {
+            if (cart.length > 0) {
+                let removedItem = cart.pop();
+                displayMessage(`"${removedItem.name}" has been removed from the cart.`);
+            } else {
+                displayError("Cart is empty!");
+            }
+            updateCartDisplay();
+        };
+
+        // Remove specific item by its index in the cart array
+        function removeItemByIndex(index) {
+            if (index >= 0 && index < cart.length) {
+                const [removedItem] = cart.splice(index, 1); // splice returns an array of removed items
+                displayMessage(`"${removedItem.name}" has been removed from the cart.`);
+            } else {
+                displayError("Invalid item to remove.");
+            }
+            updateCartDisplay();
+        }
+
+        // Clear the entire cart
+        function clearCart() {
+            if (confirm("Are you sure you want to clear the entire cart?")) {
+                cart = [];
+                displayMessage("Cart has been cleared!");
+                updateCartDisplay();
+            }
+        }
+
+        // View cart - now just triggers the display update
+        const viewCart = () => {
+            updateCartDisplay();
+            displayMessage("Cart content displayed.");
+        };
+
+        // --- Initialization ---
+
+        // Initialize the cart display when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartFromLocalStorage(); // Load cart first
+            updateCartDisplay(); // Then display it
+        });
+    </script>
+</body>
+
+</html>
